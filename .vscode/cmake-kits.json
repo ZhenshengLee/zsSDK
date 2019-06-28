@@ -1,0 +1,13 @@
+[
+    {
+        "name": "zs x86_64-linux-gnu 5.4",
+        "toolchainFile": "${workspaceRoot}/cmake/toolchains/x86_64-linux-gnu.cmake",
+        "preferredGenerator": {
+            "name": "Unix Makefiles"
+        },
+        "cmakeSettings":{
+            "cmake.generator": "Unix Makefiles"
+        },
+        "environmentVariables": {}
+    }
+]
