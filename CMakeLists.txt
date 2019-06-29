@@ -8,6 +8,9 @@ cmake_minimum_required(VERSION 3.9.0)
 
 cmake_policy(SET CMP0048 NEW)
 
+# using cmaktools in vscode
+include(CMakeToolsHelpers OPTIONAL)
+
 # Add this repository's cmake modules to CMAKE_MODULE_PATH
 list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_CURRENT_LIST_DIR}/cmake)
 
@@ -77,6 +80,8 @@ add_subdirectory(extern)
 
 # Don't enable testing until after building dependencies
 enable_testing()
+# in vscode using CTest as a test client
+include(CTest)
 
 # Turn on compiler flags for our code
 include(ZSACompilerFlags)
@@ -147,9 +152,11 @@ set (CLANG_FORMAT_ROOT
     ${CMAKE_CURRENT_SOURCE_DIR}/tools)
 
 find_program(CLANG_FORMAT clang-format DOC "Clang format tool")
+message(STATUS "Not validating source format")
 if (${CLANG_FORMAT} STREQUAL "CLANG_FORMAT-NOTFOUND")
     message(STATUS "Clang-format not found")
-else()
+# zs: 不考虑clang-format
+# else()
 
     set(VALID_CLANG_FORMAT_VERSION "6\.0\.0")
     execute_process(COMMAND ${CLANG_FORMAT} -version OUTPUT_VARIABLE CLANG_VERSION_STRING)
