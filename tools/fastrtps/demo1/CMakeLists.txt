@@ -39,10 +39,6 @@ else()
 
 endif()
 
-SET(FAST_RTPS_INSTALL_PREFIX "${PROJECT_BINARY_DIR}/thirdparty/fastrtps-install")
-link_directories("${FAST_RTPS_INSTALL_PREFIX}/lib")
-INCLUDE_DIRECTORIES("${FAST_RTPS_INSTALL_PREFIX}/include")
-
 add_executable(fasttrpsdemo1 ${SOURCE_FILES} ${HELLOWORLD_EXAMPLE_SOURCES_CXX} ${HELLOWORLD_EXAMPLE_SOURCES_CPP})
 target_link_libraries(fasttrpsdemo1 PRIVATE ${EXTERNAL_LIBRARIES})
 
