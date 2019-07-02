@@ -19,6 +19,7 @@ configure_file(
     )
 
 set(EXTERNAL_LIBRARIES
+    pthread
     fastcdr
     fastrtps
 )
@@ -40,7 +41,19 @@ else()
 endif()
 
 add_executable(fasttrpsdemo1 ${SOURCE_FILES} ${HELLOWORLD_EXAMPLE_SOURCES_CXX} ${HELLOWORLD_EXAMPLE_SOURCES_CPP})
-target_link_libraries(fasttrpsdemo1 PRIVATE ${EXTERNAL_LIBRARIES})
+
+target_link_directories(fasttrpsdemo1
+    PRIVATE
+    "${FAST_RTPS_INSTALL_PREFIX}/lib"
+    )
+target_include_directories(fasttrpsdemo1
+    PRIVATE
+    "${FAST_RTPS_INSTALL_PREFIX}/include"
+    )
+target_link_libraries(fasttrpsdemo1
+    PRIVATE
+    ${EXTERNAL_LIBRARIES}
+    )
 
 # Setup install
 include(GNUInstallDirs)

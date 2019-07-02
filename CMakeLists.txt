@@ -142,7 +142,7 @@ if (ZSA_BUILD_DOCS)
     endif()
 endif()
 
-option(ZSA_VALIDATE_CLANG_FORMAT "Validate clang-format results as part of build" Yes)
+option(ZSA_VALIDATE_CLANG_FORMAT "Validate clang-format results as part of build" No)
 
 set (CLANG_FORMAT_ROOT
     ${CMAKE_CURRENT_SOURCE_DIR}/src
@@ -155,8 +155,7 @@ find_program(CLANG_FORMAT clang-format DOC "Clang format tool")
 message(STATUS "Not validating source format")
 if (${CLANG_FORMAT} STREQUAL "CLANG_FORMAT-NOTFOUND")
     message(STATUS "Clang-format not found")
-# zs: 不考虑clang-format
-# else()
+else()
 
     set(VALID_CLANG_FORMAT_VERSION "6\.0\.0")
     execute_process(COMMAND ${CLANG_FORMAT} -version OUTPUT_VARIABLE CLANG_VERSION_STRING)

@@ -21,7 +21,7 @@ ssh -T git@github.com
 
 ## 通信中间件
 
-采用openDDS
+采用fast-rtps
 
 ## 应用
 
