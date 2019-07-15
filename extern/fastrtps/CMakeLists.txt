@@ -27,7 +27,7 @@ if (NOT TARGET fastrtps)
         PATCH_COMMAND ${APPLE_PATCH_COMMAND}
         CMAKE_ARGS
             "-DTHIRDPARTY=ON"
-            "-DBUILD_DOCUMENTATION=ON"
+            "-DBUILD_DOCUMENTATION=OFF"
             "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
             "-DCOMPILE_EXAMPLES=OFF"
             "-DINTERNAL_DEBUG=ON"
