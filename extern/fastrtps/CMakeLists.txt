@@ -27,12 +27,12 @@ if (NOT TARGET fastrtps)
         PATCH_COMMAND ${APPLE_PATCH_COMMAND}
         CMAKE_ARGS
             "-DTHIRDPARTY=ON"
-            "BUILD_DOCUMENTATION=ON"
+            "-DBUILD_DOCUMENTATION=ON"
             "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
             "-DCOMPILE_EXAMPLES=OFF"
             "-DINTERNAL_DEBUG=ON"
             "-DCMAKE_INSTALL_PREFIX=${FAST_RTPS_INSTALL_PREFIX}"
-            "-DCMAKE_POSITION_INDEPENDENT_CODE=true"
+            "-DCMAKE_POSITION_INDEPENDENT_CODE=ON"
             # failure---assuming bugs
             # "-DEPROSIMA_BUILD=ON"
             # "-DBUILD_SHARED_LIBS=OFF"
