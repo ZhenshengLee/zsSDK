@@ -19,6 +19,19 @@ ssh-add ~/.ssh/github
 ssh -T git@github.com
 ```
 
+## 打造基于多个传感器的算法服务
+
+参考azure-kinect软件体系结构，打造基于astra和rplidar的算法服务，实现基于视觉的定位功能
+
+- 多传感器的驱动和示例程序
+- 删除多余代码
+- 多线程是怎么走起来的
+- 硬件换成astra相机
+- 如何调试
+- 怎么加入pcl处理
+- 原型设计
+- ROS驱动封装
+
 ## 通信中间件
 
 采用fast-rtps
