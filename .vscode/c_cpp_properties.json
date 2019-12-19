@@ -1,16 +1,72 @@
 {
+    "env": {
+        "myDefaultIncludePath": [
+            "${workspaceFolder}",
+            "${workspaceFolder}/include",
+            "${workspaceRoot}"
+        ],
+        "myLinuxCompilerPath": "/usr/bin/gcc",
+        "myMinGWVersion": "8.1.0"
+    },
     "configurations": [
         {
             "name": "Linux",
+            "intelliSenseMode": "clang-x64",
+            "compilerPath": "${myLinuxCompilerPath}",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${myDefaultIncludePath}",
+                "/usr/include",
+                "/usr/local/include"
             ],
-            "defines": [],
-            "compilerPath": "/usr/bin/clang",
-            "cStandard": "c11",
-            "cppStandard": "c++17",
-            "configurationProvider": "vector-of-bool.cmake-tools",
-            "compileCommands": "${workspaceFolder}/build/compile_commands.json"
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "__GNUC__=7",
+                "__cdecl=__attribute__((__cdecl__))"
+            ],
+            "browse": {
+                "path": [
+                    "${myDefaultIncludePath}",
+                    "/usr/include",
+                    "/usr/local/include"
+                ],
+                "limitSymbolsToIncludedHeaders": true,
+                "databaseFilename": ""
+            },
+            "cStandard": "c99",
+            "cppStandard": "c++11",
+            "compileCommands": "${workspaceFolder}/.vscode/compile_commands.json",
+            "configurationProvider": "vector-of-bool.cmake-tools"
+        },
+        {
+            "name": "Win32",
+            "includePath": [
+                "D:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\VC\\Tools\\MSVC\\14.12.25827\\include\\*",
+                "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.16299.0\\um",
+                "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.16299.0\\shared",
+                "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.16299.0\\winrt",
+                "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.16299.0\\ucrt",
+                "${workspaceFolder}"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE"
+            ],
+            "intelliSenseMode": "msvc-x64",
+            "browse": {
+                "path": [
+                    "D:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\VC\\Tools\\MSVC\\14.12.25827\\include\\*",
+                    "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.16299.0\\um",
+                    "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.16299.0\\shared",
+                    "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.16299.0\\winrt",
+                    "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.16299.0\\ucrt",
+                    "${workspaceFolder}"
+                ],
+                "limitSymbolsToIncludedHeaders": true,
+                "databaseFilename": ""
+            },
+            "compileCommands": "${workspaceFolder}/.vscode/compile_commands.json",
+            "configurationProvider": "vector-of-bool.cmake-tools"
         }
     ],
     "version": 4

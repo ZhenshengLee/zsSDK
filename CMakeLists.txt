@@ -115,7 +115,7 @@ endif()
 add_subdirectory(examples)
 add_subdirectory(src)
 add_subdirectory(tests)
-add_subdirectory(tools)
+# add_subdirectory(tools)
 
 if (ZSA_BUILD_DOCS)
     find_package(Doxygen 1.8.11 EXACT)

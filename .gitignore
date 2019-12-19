@@ -3,11 +3,6 @@
 .idea/
 build/
 out/
-.vscode/.cmaketools.json
-.vscode/tags
-.vscode/*.bat
 .cache/
 *.pyc
 /.vs/
-.vscode/ipch/
-.vscode/settings.json
