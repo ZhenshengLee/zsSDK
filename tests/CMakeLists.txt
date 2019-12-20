@@ -2,4 +2,4 @@
 include(zsaTest)
 
 add_subdirectory(example)
-add_subdirectory(example2)
+add_subdirectory(astra)

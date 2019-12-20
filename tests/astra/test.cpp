@@ -1,15 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include <zsa/zsa.h>
+#include <astra/capi/astra.h>
 #include <gtest/gtest.h>
 
-TEST(zsa, example)
+TEST(astra, example)
 {
-    zsa_device_t device = nullptr;
-    // ASSERT_EQ(K4A_RESULT_SUCCEEDED, zsa_device_open(K4A_DEVICE_DEFAULT, &device));
-    // zsa_device_close(device);
-    // device = nullptr;
+    ASSERT_EQ(ASTRA_STATUS_SUCCESS, astra_initialize());
+    astra_terminate();
 }
 
 int main(int argc, char **argv)
