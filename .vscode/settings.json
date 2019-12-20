@@ -92,7 +92,8 @@
         "*.config": "xml",
         "*.jinja": "jinja",
         "zsa.h": "c",
-        "common.h": "c"
+        "common.h": "c",
+        "astra.h": "c"
     },
     "search.exclude": {
         "build/**": true
