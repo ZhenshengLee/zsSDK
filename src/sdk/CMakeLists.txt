@@ -40,6 +40,21 @@ target_include_directories(zsa PUBLIC
 
 # Link in libraries
 target_link_libraries(zsa PRIVATE
+    zsainternal::logging
+    # zsainternal::allocator
+    # zsainternal::calibration
+    zsainternal::capturesync
+    zsainternal::color
+    zsainternal::color_mcu
+    # zsainternal::depth
+    # zsainternal::dewrapper
+    # zsainternal::depth_mcu
+    # zsainternal::image
+    # zsainternal::imu
+    zsainternal::queue
+    zsainternal::astra
+    zsainternal::astra_core
+    zsainternal::astra_core_api
 )
 
 # Define alias for zsa

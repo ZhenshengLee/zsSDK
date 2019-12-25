@@ -4,9 +4,9 @@ set(ZSA_PRIV_INCLUDE_DIR ${CMAKE_CURRENT_LIST_DIR}/../include ${CMAKE_CURRENT_BI
 # Add folders in Alphabetical order to help reduce merge issues
 add_subdirectory(allocator)
 # add_subdirectory(calibration)
-# add_subdirectory(capturesync)
-# add_subdirectory(color)
-# add_subdirectory(color_mcu)
+add_subdirectory(capturesync)
+add_subdirectory(color)
+add_subdirectory(color_mcu)
 # add_subdirectory(depth)
 # add_subdirectory(depth_mcu)
 # add_subdirectory(deloader)

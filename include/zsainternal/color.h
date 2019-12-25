@@ -10,9 +10,9 @@
 #include <zsa/zsatypes.h>
 #include <zsainternal/handle.h>
 #include <zsainternal/common.h>
-// #include <zsainternal/color_mcu.h>
+#include <zsainternal/color_mcu.h>
 // #include <zsainternal/depth_mcu.h>
-// #include <azure_c_shared_utility/tickcounter.h>
+#include <azure_c_shared_utility/tickcounter.h>
 
 #ifdef __cplusplus
 extern "C" {

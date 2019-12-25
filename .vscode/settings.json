@@ -93,7 +93,9 @@
         "*.jinja": "jinja",
         "zsa.h": "c",
         "common.h": "c",
-        "astra.h": "c"
+        "astra.h": "c",
+        "functional": "c",
+        "tickcounter.h": "c"
     },
     "search.exclude": {
         "build/**": true
