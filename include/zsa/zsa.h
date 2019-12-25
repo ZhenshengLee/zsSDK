@@ -94,6 +94,61 @@ ZSA_EXPORT zsa_result_t zsa_device_open(uint32_t index, zsa_device_t *device_han
  */
 ZSA_EXPORT void zsa_device_close(zsa_device_t device_handle);
 
+/** Starts color and depth camera capture.
+ *
+ * \param device_handle
+ * Handle obtained by zsa_device_open().
+ *
+ * \param config
+ * The configuration we want to run the device in. This can be initialized with ::ZSA_DEVICE_CONFIG_INIT_DISABLE_ALL.
+ *
+ * \returns
+ * ::ZSA_RESULT_SUCCEEDED is returned on success.
+ *
+ * \relates zsa_device_t
+ *
+ * \remarks
+ * Individual sensors configured to run will now start to stream captured data.
+ *
+ * \remarks
+ * It is not valid to call zsa_device_start_cameras() a second time on the same \ref zsa_device_t until
+ * zsa_device_stop_cameras() has been called.
+ *
+ * \xmlonly
+ * <requirements>
+ *   <requirement name="Header">zsa.h (include zsa/zsa.h)</requirement>
+ *   <requirement name="Library">zsa.lib</requirement>
+ *   <requirement name="DLL">zsa.dll</requirement>
+ * </requirements>
+ * \endxmlonly
+ */
+ZSA_EXPORT zsa_result_t zsa_device_start_cameras(zsa_device_t device_handle, const zsa_device_configuration_t *config);
+
+/** Stops the color and depth camera capture.
+ *
+ * \param device_handle
+ * Handle obtained by zsa_device_open().
+ *
+ * \relates zsa_device_t
+ *
+ * \remarks
+ * The streaming of individual sensors stops as a result of this call. Once called, zsa_device_start_cameras() may
+ * be called again to resume sensor streaming.
+ *
+ * \remarks
+ * This function may be called while another thread is blocking in zsa_device_get_capture().
+ * Calling this function while another thread is in that function will result in that function returning a failure.
+ *
+ * \xmlonly
+ * <requirements>
+ *   <requirement name="Header">zsa.h (include zsa/zsa.h)</requirement>
+ *   <requirement name="Library">zsa.lib</requirement>
+ *   <requirement name="DLL">zsa.dll</requirement>
+ * </requirements>
+ * \endxmlonly
+ */
+ZSA_EXPORT void zsa_device_stop_cameras(zsa_device_t device_handle);
+
 
 /**
  * @}

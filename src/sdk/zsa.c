@@ -68,7 +68,7 @@ uint32_t zsa_device_get_installed_count(void)
 {
     uint32_t device_count = 9;
     // usb_cmd_get_device_count(&device_count);
-    LOG_ERROR("zsa_device_get_installed_count starting", 0);
+    LOG_ERROR("zs: zsa_device_get_installed_count starting", 0);
     return device_count;
 }
 
@@ -200,117 +200,98 @@ void zsa_device_close(zsa_device_t device_handle)
 //     return image_create(format, width_pixels, height_pixels, stride_bytes, ALLOCATION_SOURCE_USER, image_handle);
 // }
 
-// zsa_result_t zsa_device_start_cameras(zsa_device_t device_handle, const zsa_device_configuration_t *config)
-// {
-//     RETURN_VALUE_IF_ARG(ZSA_RESULT_FAILED, config == NULL);
-//     RETURN_VALUE_IF_HANDLE_INVALID(ZSA_RESULT_FAILED, zsa_device_t, device_handle);
-//     zsa_result_t result = ZSA_RESULT_SUCCEEDED;
-//     zsa_context_t *device = zsa_device_t_get_context(device_handle);
+static zsa_result_t validate_configuration(zsa_context_t *device, const zsa_device_configuration_t *config)
+{
+    RETURN_VALUE_IF_ARG(ZSA_RESULT_FAILED, config == NULL);
+    RETURN_VALUE_IF_ARG(ZSA_RESULT_FAILED, device == NULL);
+    zsa_result_t result = ZSA_RESULT_SUCCEEDED;
+    return result;
+}
 
-//     LOG_TRACE("zsa_device_start_cameras starting", 0);
-//     if (device->depth_started == true || device->color_started == true)
-//     {
-//         LOG_ERROR("zsa_device_start_cameras called while one of the sensors are running, depth:%d color:%d",
-//                   device->depth_started,
-//                   device->color_started);
-//         result = ZSA_RESULT_FAILED;
-//     }
+zsa_result_t zsa_device_start_cameras(zsa_device_t device_handle, const zsa_device_configuration_t *config)
+{
+    RETURN_VALUE_IF_ARG(ZSA_RESULT_FAILED, config == NULL);
+    RETURN_VALUE_IF_HANDLE_INVALID(ZSA_RESULT_FAILED, zsa_device_t, device_handle);
+    zsa_result_t result = ZSA_RESULT_SUCCEEDED;
+    zsa_context_t *device = zsa_device_t_get_context(device_handle);
 
-//     if (device->imu_started == true)
-//     {
-//         // Color camera resets the IMU timestamp so we avoid that condition.
-//         LOG_ERROR("zsa_device_start_cameras called while the IMU is running is not supported, stop the IMU", 0);
-//         result = ZSA_RESULT_FAILED;
-//     }
+    LOG_TRACE("zsa_device_start_cameras starting", 0);
+    if (device->color_started == true)
+    {
+        LOG_ERROR("zsa_device_start_cameras called while one of the sensors are running, color:%d",
+                  device->color_started);
+        result = ZSA_RESULT_FAILED;
+    }
 
-//     if (ZSA_SUCCEEDED(result))
-//     {
-//         LOG_INFO("Starting camera's with the following config.", 0);
-//         LOG_INFO("    color_format:%d", config->color_format);
-//         LOG_INFO("    color_resolution:%d", config->color_resolution);
-//         LOG_INFO("    depth_mode:%d", config->depth_mode);
-//         LOG_INFO("    camera_fps:%d", config->camera_fps);
-//         LOG_INFO("    synchronized_images_only:%d", config->synchronized_images_only);
-//         LOG_INFO("    depth_delay_off_color_usec:%d", config->depth_delay_off_color_usec);
-//         LOG_INFO("    wired_sync_mode:%d", config->wired_sync_mode);
-//         LOG_INFO("    subordinate_delay_off_master_usec:%d", config->subordinate_delay_off_master_usec);
-//         LOG_INFO("    disable_streaming_indicator:%d", config->disable_streaming_indicator);
-//         result = TRACE_CALL(validate_configuration(device, config));
-//     }
+    if (ZSA_SUCCEEDED(result))
+    {
+        LOG_INFO("Starting camera's with the following config.", 0);
+        LOG_INFO("    color_format:%d", config->color_format);
+        LOG_INFO("    color_resolution:%d", config->color_resolution);
+        LOG_INFO("    camera_fps:%d", config->camera_fps);
+        LOG_INFO("    synchronized_images_only:%d", config->synchronized_images_only);
+        LOG_INFO("    wired_sync_mode:%d", config->wired_sync_mode);
+        LOG_INFO("    subordinate_delay_off_master_usec:%d", config->subordinate_delay_off_master_usec);
+        LOG_INFO("    disable_streaming_indicator:%d", config->disable_streaming_indicator);
+        result = TRACE_CALL(validate_configuration(device, config));
+    }
 
-//     if (ZSA_SUCCEEDED(result))
-//     {
-//         result = TRACE_CALL(colormcu_set_multi_device_mode(device->colormcu, config));
-//     }
+    if (ZSA_SUCCEEDED(result))
+    {
+        result = TRACE_CALL(colormcu_set_multi_device_mode(device->colormcu, config));
+    }
 
-//     if (ZSA_SUCCEEDED(result))
-//     {
-//         result = TRACE_CALL(capturesync_start(device->capturesync, config));
-//     }
+    if (ZSA_SUCCEEDED(result))
+    {
+        result = TRACE_CALL(capturesync_start(device->capturesync, config));
+    }
 
-//     if (ZSA_SUCCEEDED(result))
-//     {
-//         if (config->depth_mode != ZSA_DEPTH_MODE_OFF)
-//         {
-//             result = TRACE_CALL(depth_start(device->depth, config));
-//         }
-//         if (ZSA_SUCCEEDED(result))
-//         {
-//             device->depth_started = true;
-//         }
-//     }
 
-//     if (ZSA_SUCCEEDED(result))
-//     {
-//         if (config->color_resolution != ZSA_COLOR_RESOLUTION_OFF)
-//         {
-//             // NOTE: Color must be started before depth and IMU as it triggers the sync of PTS. If it starts after
-//             // depth or IMU, the user will see timestamps reset back to zero when the color camera is started.
-//             result = TRACE_CALL(color_start(device->color, config));
-//         }
-//         if (ZSA_SUCCEEDED(result))
-//         {
-//             device->color_started = true;
-//         }
-//     }
-//     LOG_INFO("zsa_device_start_cameras started", 0);
+    if (ZSA_SUCCEEDED(result))
+    {
+        if (config->color_resolution != ZSA_COLOR_RESOLUTION_OFF)
+        {
+            // NOTE: Color must be started before depth and IMU as it triggers the sync of PTS. If it starts after
+            // depth or IMU, the user will see timestamps reset back to zero when the color camera is started.
+            result = TRACE_CALL(color_start(device->color, config));
+        }
+        if (ZSA_SUCCEEDED(result))
+        {
+            device->color_started = true;
+        }
+    }
+    LOG_INFO("zsa_device_start_cameras started", 0);
 
-//     if (ZSA_FAILED(result))
-//     {
-//         zsa_device_stop_cameras(device_handle);
-//     }
+    if (ZSA_FAILED(result))
+    {
+        zsa_device_stop_cameras(device_handle);
+    }
 
-//     return result;
-// }
+    return result;
+}
 
-// void zsa_device_stop_cameras(zsa_device_t device_handle)
-// {
-//     RETURN_VALUE_IF_HANDLE_INVALID(VOID_VALUE, zsa_device_t, device_handle);
-//     zsa_context_t *device = zsa_device_t_get_context(device_handle);
+void zsa_device_stop_cameras(zsa_device_t device_handle)
+{
+    RETURN_VALUE_IF_HANDLE_INVALID(VOID_VALUE, zsa_device_t, device_handle);
+    zsa_context_t *device = zsa_device_t_get_context(device_handle);
 
-//     LOG_INFO("zsa_device_stop_cameras stopping", 0);
+    LOG_INFO("zsa_device_stop_cameras stopping", 0);
 
-//     // Capturesync needs to stop before color so that all queues will purged
-//     if (device->capturesync)
-//     {
-//         capturesync_stop(device->capturesync);
-//     }
+    // Capturesync needs to stop before color so that all queues will purged
+    if (device->capturesync)
+    {
+        capturesync_stop(device->capturesync);
+    }
 
-//     if (device->depth)
-//     {
-//         depth_stop(device->depth);
-//         device->depth_started = false;
-//     }
+    if (device->color)
+    {
+        // This call will block waiting for all outstanding allocations to be released
+        color_stop(device->color);
+        device->color_started = false;
+    }
 
-//     if (device->color)
-//     {
-//         // This call will block waiting for all outstanding allocations to be released
-//         color_stop(device->color);
-//         device->color_started = false;
-//     }
-
-//     LOG_INFO("zsa_device_stop_cameras stopped", 0);
-// }
+    LOG_INFO("zsa_device_stop_cameras stopped", 0);
+}
 
 // zsa_buffer_result_t zsa_device_get_serialnum(zsa_device_t device_handle,
 //                                              char *serial_number,
