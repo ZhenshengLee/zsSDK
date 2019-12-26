@@ -31,6 +31,8 @@ typedef enum
     ALLOCATION_SOURCE_IMU,       /**< Memory was allocated by the IMU reader */
     ALLOCATION_SOURCE_USB_DEPTH, /**< Memory was allocated by the USB reader */
     ALLOCATION_SOURCE_USB_IMU,   /**< Memory was allocated by the USB reader */
+    ALLOCATION_SOURCE_COM_DEPTH,   /**< Memory was allocated by the USB reader */
+    ALLOCATION_SOURCE_COM_IMU,   /**< Memory was allocated by the USB reader */
 } allocation_source_t;
 
 /** Initializes the globals used by the allocator

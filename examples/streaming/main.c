@@ -11,10 +11,21 @@ int main(int argc, char **argv)
 
     uint32_t device_count = zsa_device_get_installed_count();
 
-    if (device_count == 9)
+    // device是机器人本体中的所有视觉传感设备
+    // zsa_device_t 就是一个指针
+    zsa_device_t device = NULL;
+    // 初始化硬件和通信，目前没有硬件
+    if (ZSA_RESULT_SUCCEEDED != zsa_device_open(ZSA_DEVICE_DEFAULT, &device))
     {
-        printf("No ZSA devices found\n");
-        return 0;
+        printf("Failed to open device\n");
+        goto Exit;
+    }
+
+    returnCode = 0;
+Exit:
+    if (device != NULL)
+    {
+        zsa_device_close(device);
     }
 
     return returnCode;

@@ -68,7 +68,7 @@ uint32_t zsa_device_get_installed_count(void)
 {
     uint32_t device_count = 9;
     // usb_cmd_get_device_count(&device_count);
-    LOG_ERROR("zs: zsa_device_get_installed_count starting", 0);
+    LOG_ERROR("zs: zsa_device_get_installed_count not implemented", 0);
     return device_count;
 }
 
